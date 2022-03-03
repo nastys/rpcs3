@@ -1215,7 +1215,11 @@ usz get_x64_access_size(x64_context* context, x64_op_t op, x64_reg_t reg, usz d_
 
 #elif defined(ARCH_ARM64)
 
+#ifdef __APPLE__
+#define RIP(context) ((context)->uc_mcontext->__ss.__pc)
+#else
 #define RIP(context) ((context)->uc_mcontext.pc)
+#endif
 
 #endif /* ARCH_ */
 

@@ -286,8 +286,13 @@ jit_runtime_base& asmjit::get_global_runtime()
 			// Initialize "end" pointer
 			m_max = m_pos + size;
 
+#if (defined (__APPLE__) && defined (__aarch64__))
+			// Make memory readable + writable
+			utils::memory_commit(m_pos, size, utils::protection::rw);
+#else
 			// Make memory writable + executable
 			utils::memory_commit(m_pos, size, utils::protection::wx);
+#endif
 		}
 
 		uchar* _alloc(usz size, usz align) noexcept override
