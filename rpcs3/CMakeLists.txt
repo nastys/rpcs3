@@ -1,4 +1,4 @@
-﻿
+
 if(USE_PRECOMPILED_HEADERS AND NOT COMMAND target_precompile_headers)
     include(cotire)
 endif()
@@ -23,6 +23,10 @@ elseif(NOT MSVC AND NOT CMAKE_CXX_FLAGS MATCHES "LIBICONV_PLUG")
     #it seems like glibc includes the iconv functions we use but other libc
     #implementations like the one on OSX don't seem implement them
     set(ADDITIONAL_LIBS ${ADDITIONAL_LIBS} "iconv")
+endif()
+
+if(APPLE)
+	set(ADDITIONAL_LIBS ${ADDITIONAL_LIBS} "MoltenVK_lib")
 endif()
 
 if(UNIX AND NOT APPLE)

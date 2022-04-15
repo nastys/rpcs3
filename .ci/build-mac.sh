@@ -24,7 +24,7 @@ sed -i '' "s/extern const double NSAppKitVersionNumber;/const double NSAppKitVer
 # build MoltenVK
 cd 3rdparty/MoltenVK/MoltenVK
 ./fetchDependencies --macos
-xcodebuild build -quiet -project MoltenVKPackaging.xcodeproj -scheme "MoltenVK Package (macOS only)" -configuration "Release" -arch "x86_64"
+xcodebuild build -quiet -project MoltenVKPackaging.xcodeproj -scheme "MoltenVK Package (macOS only)" -configuration "Release" -arch "x86_64" MVK_CONFIG_RESUME_LOST_DEVICE=1
 cd ../../../
 mkdir "$VULKAN_SDK/lib"
 ln "$VULKAN_SDK/dylib/macOS/libMoltenVK.dylib" "$VULKAN_SDK/lib/libMoltenVK.dylib"

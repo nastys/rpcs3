@@ -153,6 +153,18 @@ endif()
 # Vulkan
 set(VULKAN_TARGET 3rdparty_dummy_lib)
 if(USE_VULKAN)
+	# MoltenVK
+	if(APPLE)
+		add_subdirectory(MoltenVK)
+		add_library(MoltenVK_lib IMPORTED SHARED)
+		add_dependencies(MoltenVK_lib MoltenVK_target)
+
+		set_target_properties(MoltenVK_lib
+		PROPERTIES
+		IMPORTED_LOCATION libMoltenVK.dylib
+		INTERFACE_INCLUDE_DIRECTORIES include)
+	endif()
+
 	find_package(Vulkan)
 	if(VULKAN_FOUND)
 		add_library(3rdparty_vulkan INTERFACE)
@@ -317,6 +329,7 @@ add_library(3rdparty::discordRPC ALIAS 3rdparty_discordRPC)
 add_library(3rdparty::faudio ALIAS ${FAUDIO_TARGET})
 add_library(3rdparty::libevdev ALIAS ${LIBEVDEV_TARGET})
 add_library(3rdparty::vulkan ALIAS ${VULKAN_TARGET})
+add_library(3rdparty::moltenvk ALIAS MoltenVK_lib)
 add_library(3rdparty::openal ALIAS 3rdparty_openal)
 add_library(3rdparty::ffmpeg ALIAS 3rdparty_ffmpeg)
 add_library(3rdparty::glew ALIAS 3rdparty_glew)
